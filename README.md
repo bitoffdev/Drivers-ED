@@ -4,6 +4,6 @@ WCS Junior Game Development Project
 
 Dev Team
 ----------
- - Anthony - Modeling
- - Elliot - Gameplay, User Controls [, Server Side]
- - Ethan - World, AI
+ - Anthony - Artist(car design, meshes, animation, modiling, textures) and Level Designer(shadeing, light mapping, textures, meshes, modiling). 
+ - Elliot - Lead Programmer(graphics, gameplay, scripting, UI, input processing) and Designer(UI, game machanics).
+ - Ethan - Lead Designer(naritive, gameplay, dialogue, UI), Programmer(AI, sound, assist Elliot), Level Designer(layout of map). 
