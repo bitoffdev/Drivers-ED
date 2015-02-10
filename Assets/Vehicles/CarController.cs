@@ -2,81 +2,110 @@
 using System.Collections;
 
 public class CarController : MonoBehaviour {
-	public WheelCollider FrontLeftWheel;
-	public WheelCollider FrontRightWheel;
-
-	public float[] GearRatio;
-	private int CurrentGear = 0;
-
-	public float EngineTorque = 230.0f;
-	public float MaxEngineRPM = 3000.0f;
-	public float MinEngineRPM = 1000.0f;
-	private float EngineRPM = 0.0f;
-
-	private float CurrentThrottle = 0f;
-	private float CurrentSteerAngle = 0f;
-
-	public Vector3 MassCenterOffset = Vector3.zero;
-
-	void Start () {
-		rigidbody.centerOfMass += MassCenterOffset;
+	//Input
+	public WheelCollider[] FrontWheels;
+	float AccelerationInput;
+	float BrakeInput;
+	float SteerInput;
+	//Settings
+	float[] gearRatios = {0f, 4.23f, 2.47f, 1.67f, 1.23f, 1.00f, 0.79f};
+	float MinRPM = 200f;
+	float DownshiftRPM = 600f;
+	float PeakRPM = 900f;
+	float MaxRPM = 1200f;
+	float minTorque = 10f;
+	float maxTorque = 30f;
+	//Data
+	public int CurrentGear = 0;
+	float CurrentEngineRPM = 0f;
+	float CurrentWheelTorque;
+	float CurrentBrakeTorque;
+	/// <summary>
+	/// Sets the acceleration input. The value should be between -1 and 1. Negative values apply brake.
+	/// </summary>
+	public void SetAcceleration(float val){
+		AccelerationInput = val;
 	}
 	/// <summary>
-	/// Sets the throttle.
+	/// Sets the steering input. The value should be between -1 and 1.
 	/// </summary>
-	/// <param name="throttle">Should be between -1 and 1</param>
-	public void SetThrottle(float throttle){
-		CurrentThrottle = Mathf.Clamp(throttle, -1f, 1f);
+	/// <param name="val">Value.</param>
+	public void SetSteering(float val){
+		SteerInput = val;
 	}
-	/// <summary>
-	/// Sets the steering angle.
-	/// </summary>
-	/// <param name="angle">Angle</param>
-	public void SetSteerAngle(float angle){
-		CurrentSteerAngle = angle;
+	public float GetRPM(){
+		return CurrentEngineRPM;
 	}
-	void Update () {
-		// Compute the engine RPM based on the average RPM of the two wheels, then call the shift gear function
-		EngineRPM = (FrontLeftWheel.rpm + FrontRightWheel.rpm)/2f * GearRatio[CurrentGear];
-		ShiftGears();
-		
-		// Set the audio pitch to the percentage of RPM to the maximum RPM plus one, this makes the sound play
-		// up to twice it's pitch, where it will suddenly drop when it switches gears.
-		audio.pitch = Mathf.Min (Mathf.Abs(EngineRPM / MaxEngineRPM) + 1.0f, 2f);
 
-		// Apply values to the Wheel controllers
-		FrontLeftWheel.motorTorque = EngineTorque / GearRatio [CurrentGear] * CurrentThrottle;
-		FrontRightWheel.motorTorque = EngineTorque / GearRatio[CurrentGear] * CurrentThrottle;
-		FrontLeftWheel.steerAngle = CurrentSteerAngle;
-		FrontRightWheel.steerAngle = CurrentSteerAngle;
+	void Update ()
+	{
+		UpdateEngine();
+		ShiftGears ();
+		UpdateCar();
+
+		audio.pitch = Mathf.Min (Mathf.Abs(CurrentEngineRPM / MaxRPM), 2f);
 	}
-	void ShiftGears(){
-		// This funciton shifts the gears of the vehcile, it loops through all the gears, checking which will make
-		// the engine RPM fall within the desired range. The gear is then set to this "appropriate" value.
-		if ( EngineRPM >= MaxEngineRPM ) {
-			int AppropriateGear = CurrentGear;
-			
-			for (int i = 0; i < GearRatio.Length; i++) {
-				if (FrontLeftWheel.rpm * GearRatio[i] < MaxEngineRPM) {
-					AppropriateGear = i;
-					break;
-				}
-			}
-			
-			CurrentGear = AppropriateGear;
+
+	void UpdateCar (){
+		foreach (WheelCollider w in FrontWheels) {
+			w.motorTorque = CurrentWheelTorque;
+			w.steerAngle = Mathf.LerpAngle(SteerInput*30, SteerInput*5, rigidbody.velocity.magnitude / 30f);
+			w.brakeTorque = CurrentBrakeTorque;
 		}
-		
-		if ( EngineRPM <= MinEngineRPM ) {
-			int AppropriateGear = CurrentGear;
+	}
+	
+	
+	void UpdateEngine()
+	{
+		CurrentWheelTorque = 0f;
+		// Calculate average wheel RPM
+		float wheelRPM = 0f;
+		foreach (WheelCollider w in FrontWheels) {
+			wheelRPM += w.rpm;
+		}
+		wheelRPM /= FrontWheels.Length;
+
+		CurrentBrakeTorque = Mathf.Max (-AccelerationInput, 0f) * 25f;
+		if (CurrentGear > 0) {
+			// Engine Shaft RPM
+			float EngineShaftRPM = wheelRPM * gearRatios[CurrentGear];
+			// Lerp the Engine RPM toward its shaft RPM
+			CurrentEngineRPM = Mathf.MoveTowards(CurrentEngineRPM, EngineShaftRPM, (MaxRPM - MinRPM) * Time.deltaTime);
+			// Calculate wheel torque to apply
+			CurrentWheelTorque = GetEngineTorqueFromRPM(CurrentEngineRPM) * Mathf.Max (AccelerationInput, 0f) * gearRatios[CurrentGear];
+		} else {
+			// Idle Engine
+			float TargetRPM = Mathf.Lerp(MinRPM, MaxRPM, AccelerationInput);
+			CurrentEngineRPM += (TargetRPM - CurrentEngineRPM) * Time.deltaTime;
+		}
+	}
+
+	void ShiftGears(){
+		if (CurrentGear == 0 && CurrentEngineRPM > 400f) {
+			CurrentGear++;
+		} else if (CurrentGear < gearRatios.Length - 1 && CurrentEngineRPM > PeakRPM && AccelerationInput > 0.2f){
+			CurrentGear++;
+		} else if (CurrentGear > 0 && CurrentEngineRPM < DownshiftRPM){
+			CurrentGear--;
+		}
+	}
+	
+	
+	float GetEngineTorqueFromRPM(float RPM)
+	{
+		if (RPM < MinRPM) {
+			return 0f; //Car stalled
+		} else if (RPM < PeakRPM) {
+			// Ramp up to the peak RPM value
+			float difference = RPM - MinRPM;
+			float x = difference / (PeakRPM - MinRPM);
 			
-			for (int j=GearRatio.Length-1; j>=0; j--) {
-				if ( FrontLeftWheel.rpm * GearRatio[j] > MinEngineRPM ) {
-					AppropriateGear = j;
-					break;
-				}
-			}
-			
-			CurrentGear = AppropriateGear;
+			return Mathf.Lerp(minTorque, maxTorque, x);
+		} else {
+			// Ramp down from peak to max
+			float difference = RPM - PeakRPM;
+			float x = difference / MinRPM;
+			return Mathf.Lerp(maxTorque, minTorque, x);
 		}
 	}
 }
