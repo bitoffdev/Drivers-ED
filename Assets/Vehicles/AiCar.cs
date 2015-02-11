@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(CarController))]
-public class PlayerCar : MonoBehaviour {
+public class AiCar : MonoBehaviour {
 	CarController controller;
 	float SteerAngle;
 
@@ -15,7 +15,7 @@ public class PlayerCar : MonoBehaviour {
 		controller.SetSteering (Random.Range(-1, 1));
 	}
 
-	void OnGUI(){
+	/*void OnGUI(){
 		GUI.Label (new Rect(10f, 10f, 200f, 20f), string.Format("RPM: {0:0.00}, Speed: {1:0.00} MPH", controller.GetRPM(), rigidbody.velocity.magnitude*2.2369f));
-	}
+	}*/
 }
