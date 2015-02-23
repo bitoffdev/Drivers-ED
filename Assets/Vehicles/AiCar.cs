@@ -14,11 +14,11 @@ public class AiCar : MonoBehaviour {
 	}
 	
 	void Update () {
-		controller.SetAcceleration (Random.Range (0, 1));
+		controller.SetAcceleration (Random.Range (0f, 1f));
 
 	}
 
-	/*void OnGUI(){
-		GUI.Label (new Rect(10f, 10f, 200f, 20f), string.Format("RPM: {0:0.00}, Speed: {1:0.00} MPH", controller.GetRPM(), rigidbody.velocity.magnitude*2.2369f));
-	}*/
+	//void OnGUI(){
+	//	GUI.Label (new Rect(10f, 100f, 200f, 20f), string.Format("CPU - RPM: {0:0.00}, Speed: {1:0.00} MPH", controller.GetRPM(), rigidbody.velocity.magnitude*2.2369f));
+	//}
 }

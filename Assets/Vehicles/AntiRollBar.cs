@@ -6,7 +6,13 @@ public class AntiRollBar : MonoBehaviour {
 	public WheelCollider WheelL;
 	public WheelCollider WheelR;
 	public float AntiRoll = 250f;
-	
+
+	void Start ()
+	{
+		//Im cheating for now
+		rigidbody.centerOfMass += new Vector3 (0f, -0.5f, 0f);
+	}
+	/*
 	void FixedUpdate ()
 	{
 		WheelHit hit;
@@ -29,5 +35,5 @@ public class AntiRollBar : MonoBehaviour {
 		if (groundedR) {
 			rigidbody.AddForceAtPosition(WheelR.transform.up * antiRollForce, WheelR.transform.position);
 		}
-	}
+	}*/
 }
