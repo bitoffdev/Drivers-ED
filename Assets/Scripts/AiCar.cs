@@ -14,7 +14,7 @@ public class AiCar : MonoBehaviour {
 	}
 	
 	void Update () {
-		controller.SetAcceleration (Random.Range (0f, 1f));
+		controller.SetAcceleration (Random.Range (05f, 1f));
 
 	}
 
