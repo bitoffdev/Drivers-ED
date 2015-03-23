@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(CarController))]
 public class TrafficLaws : MonoBehaviour {
-	public enum Status {Okay, SpeedViolation, RoadViolation, LaneViolation, CollisionViolation}
+	public enum Status {Okay, SpeedViolation, RoadViolation, LaneViolation, RedLightViolation, CollisionViolation}
 	public GameObject ground;
 	public Status status =  Status.Okay;
 	float CurrentSpeedLimit = 200f;
@@ -17,10 +17,16 @@ public class TrafficLaws : MonoBehaviour {
 			return "Drove off road";
 		} else if (status == Status.LaneViolation){
 			return "Drove in wrong lane";
+		} else if (status == Status.RedLightViolation){
+			return "Drove through red light";
 		} else if (status == Status.CollisionViolation){
 			return "You crashed!";
 		}
 		return "Okay";
+	}
+
+	public void SetStatus(Status s){
+		status = s;
 	}
 
 	void Update () {
