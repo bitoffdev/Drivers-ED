@@ -34,8 +34,8 @@ public class CityBuilder : MonoBehaviour {
 	[ContextMenu("Destroy City")]
 	void DestroyCity (){
 		//Kill children
-		//while (transform.childCount>0) {
-		for (int i=0;i<transform.childCount;i++){
+		while (transform.childCount>0) {
+		//for (int i=0;i<transform.childCount;i++){
 			GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
 		}
 	}
@@ -61,13 +61,15 @@ public class CityBuilder : MonoBehaviour {
 				// SCATTER BUILDINGS WITHIN THE BLOCK
 				int tries = 0;
 				List<GameObject> newobjects = new List<GameObject> ();
-				while (tries<40){
+				while (tries<100){
 					GameObject newobj = PlaceBuilding(Buildings[Random.Range (0, Buildings.Length)], minPoint);
-					newobj.transform.SetParent(transform);
-					if ( newobjects.FindIndex(p=>p.renderer.bounds.Intersects(newobj.renderer.bounds)) == -1){
-						newobjects.Add(newobj);
-					} else {
-						GameObject.DestroyImmediate(newobj);
+					if (newobj!=null){
+						newobj.transform.SetParent(transform);
+						if ( newobjects.FindIndex(p=>p.renderer.bounds.Intersects(newobj.renderer.bounds)) == -1){
+							newobjects.Add(newobj);
+						} else {
+							GameObject.DestroyImmediate(newobj);
+						}
 					}
 					tries+=1;
 				}
@@ -80,15 +82,18 @@ public class CityBuilder : MonoBehaviour {
 	GameObject PlaceBuilding (GameObject building, Vector3 minPoint){
 		//Load the bounds
 		Bounds bounds = building.GetComponent<MeshFilter>().sharedMesh.bounds;
-		//Multiply by scale
-		bounds.center = Vector3.Scale(bounds.center, building.transform.localScale);
+		bounds.center = Vector3.Scale (bounds.center, building.transform.localScale);
 		bounds.size = Vector3.Scale (bounds.size, building.transform.localScale);
+		//Multiply by scale
+		//bounds.center = Vector3.Scale(bounds.center, building.transform.localScale);
+		//bounds.size = Vector3.Scale (bounds.size, building.transform.localScale);
 		//Calculate the range of points that the building can be placed in
 		float minX = minPoint.x - bounds.min.x;
 		float minZ = minPoint.z - bounds.min.z;
 		float maxX = minPoint.x + BlockSizeX - bounds.max.x;
 		float maxZ = minPoint.z + BlockSizeZ - bounds.max.z;
-		if (minX > maxX || minZ > maxZ) throw new System.ArgumentException("The building will not fit in the block.");
+		//if (minX > maxX || minZ > maxZ) throw new System.ArgumentException("The building will not fit in the block.");
+		if (minX > maxX || minZ > maxZ) return null;
 		Vector3 buildingpos = new Vector3(Random.Range (minX, maxX),-bounds.min.y,Random.Range (minZ, maxZ));
 		return Instantiate(building, buildingpos, Quaternion.identity) as GameObject;
 	}
