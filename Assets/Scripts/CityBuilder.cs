@@ -33,9 +33,8 @@ public class CityBuilder : MonoBehaviour {
 
 	[ContextMenu("Destroy City")]
 	void DestroyCity (){
-		//Kill children
+		// Kill children
 		while (transform.childCount>0) {
-		//for (int i=0;i<transform.childCount;i++){
 			GameObject.DestroyImmediate(transform.GetChild(0).gameObject);
 		}
 	}
@@ -43,7 +42,7 @@ public class CityBuilder : MonoBehaviour {
 	[ContextMenu("Build Now")]
 	void BuildCity (){
 		DestroyCity ();
-		//Calculate values
+		// Calculate values
 		CitySizeX = BlocksX * (BlockSizeX + RoadWidth) + RoadWidth;
 		CitySizeZ = BlocksZ * (BlockSizeZ + RoadWidth) + RoadWidth;
 		// ===== Generate Blocks
@@ -84,9 +83,6 @@ public class CityBuilder : MonoBehaviour {
 		Bounds bounds = building.GetComponent<MeshFilter>().sharedMesh.bounds;
 		bounds.center = Vector3.Scale (bounds.center, building.transform.localScale);
 		bounds.size = Vector3.Scale (bounds.size, building.transform.localScale);
-		//Multiply by scale
-		//bounds.center = Vector3.Scale(bounds.center, building.transform.localScale);
-		//bounds.size = Vector3.Scale (bounds.size, building.transform.localScale);
 		//Calculate the range of points that the building can be placed in
 		float minX = minPoint.x - bounds.min.x;
 		float minZ = minPoint.z - bounds.min.z;
@@ -94,7 +90,15 @@ public class CityBuilder : MonoBehaviour {
 		float maxZ = minPoint.z + BlockSizeZ - bounds.max.z;
 		//if (minX > maxX || minZ > maxZ) throw new System.ArgumentException("The building will not fit in the block.");
 		if (minX > maxX || minZ > maxZ) return null;
+		// Randomize the bulding's position
 		Vector3 buildingpos = new Vector3(Random.Range (minX, maxX),-bounds.min.y,Random.Range (minZ, maxZ));
+		// Snap the building to one of the sides
+		if (Random.Range (0, 2) == 0) {
+			buildingpos.x = Random.Range (0, 2)==0 ? minX : maxX;
+		} else {
+			buildingpos.z = Random.Range (0, 2)==0 ? minZ : maxZ;
+		}
+		// Return the building
 		return Instantiate(building, buildingpos, Quaternion.identity) as GameObject;
 	}
 	#endregion
@@ -117,24 +121,71 @@ public class CityBuilder : MonoBehaviour {
 				NewQuad (IntersectionPoints, IntersectionMaterial, RoadsParent.transform, true);
 				// CREATE ROAD 1
 				if (z!=BlocksZ){
-					Vector3[] Road1Points = new Vector3[4];
+					/*Vector3[] Road1Points = new Vector3[4];
 					Road1Points[0] = StartPoint + new Vector3(0f, 0f, RoadWidth);
 					Road1Points[1] = StartPoint + new Vector3(0f,0f,BlockSizeZ+RoadWidth);
 					Road1Points[2] = StartPoint + new Vector3(RoadWidth,0f,BlockSizeZ+RoadWidth);
 					Road1Points[3] = StartPoint + new Vector3(RoadWidth,0f,0f+RoadWidth);
-					NewQuad (Road1Points, RoadMaterial, RoadsParent.transform, true);
+					NewQuad (Road1Points, RoadMaterial, RoadsParent.transform, true);*/
+					BuildRect(StartPoint + new Vector3(0f, 0f, RoadWidth), StartPoint + new Vector3(RoadWidth, 0f, BlockSizeZ+RoadWidth), true, RoadMaterial, RoadsParent.transform, true);
 				}
 				// CREATE ROAD 2
 				if (x!=BlocksX){
-					Vector3[] Road2Points = new Vector3[4];
+					/*Vector3[] Road2Points = new Vector3[4];
 					Road2Points[0] = StartPoint + new Vector3(0f+RoadWidth, 0f, RoadWidth);
 					Road2Points[1] = StartPoint + new Vector3(BlockSizeX+RoadWidth,0f,0f+RoadWidth);
 					Road2Points[2] = StartPoint + new Vector3(BlockSizeX+RoadWidth,0f,0f);
 					Road2Points[3] = StartPoint + new Vector3(0f+RoadWidth,0f,0f);
-					NewQuad (Road2Points, RoadMaterial, RoadsParent.transform, true);
+					NewQuad (Road2Points, RoadMaterial, RoadsParent.transform, true);*/
+					BuildRect(StartPoint + new Vector3(RoadWidth, 0f, 0f), StartPoint + new Vector3(BlockSizeX+RoadWidth, 0f, RoadWidth), false, RoadMaterial, RoadsParent.transform, true);
 				}
 			}
 		}
+	}
+
+	static GameObject BuildRect(Vector3 minPoint, Vector3 maxPoint, bool flipUVs, Material mat, Transform parent, bool AddBoxCollider){
+		// Create Object
+		GameObject obj = BuildRect (minPoint, maxPoint, flipUVs);
+		// Add Renderer
+		MeshRenderer objrenderer = obj.AddComponent<MeshRenderer>();
+		objrenderer.material = mat;
+		obj.transform.SetParent(parent);
+		// Add Box Collider
+		if (AddBoxCollider) {
+			BoxCollider objcol = obj.AddComponent<BoxCollider> ();
+			objcol.size = new Vector3(objcol.size.x, 0.1f, objcol.size.z);
+		}
+		//Return the object
+		return obj;
+	}
+
+	static GameObject BuildRect(Vector3 minPoint, Vector3 maxPoint, bool flipUVs){
+		//Create the quad
+		Mesh m = new Mesh ();
+		m.name = "Block";
+		Vector3[] verts = new Vector3[4];
+		verts [0] = new Vector3 (minPoint.x, 0f, minPoint.z);
+		verts [1] = new Vector3 (minPoint.x, 0f, maxPoint.z);
+		verts [2] = new Vector3 (maxPoint.x, 0f, maxPoint.z);
+		verts [3] = new Vector3 (maxPoint.x, 0f, minPoint.z);
+		m.vertices = verts;
+		// Calculate UVs to be proportional
+		float unit = Mathf.Min (maxPoint.x - minPoint.x, maxPoint.z - minPoint.z);
+		float maxU = (maxPoint.x - minPoint.x)/unit;
+		float maxV = (maxPoint.z - minPoint.z)/unit;
+		if (flipUVs) {
+			m.uv = new Vector2[4]{new Vector2 (0f, 0f), new Vector2 (maxV, 0f), new Vector2 (maxV, maxU), new Vector2 (0f, maxU)};
+		} else {
+			m.uv = new Vector2[4]{new Vector2 (0f, 0f), new Vector2 (0f, maxV), new Vector2 (maxU, maxV), new Vector2 (maxU, 0f)};
+		}
+		m.triangles = new int[6]{0,1,2,0,2,3};
+		m.RecalculateBounds ();
+		m.RecalculateNormals ();
+		// Create the GameObject and attach the mesh
+		GameObject obj = new GameObject();
+		MeshFilter filter = obj.AddComponent<MeshFilter> ();
+		filter.sharedMesh = m;
+		return obj;
 	}
 
 	static GameObject NewQuad(Vector3[] points, Material material, Transform parent){
