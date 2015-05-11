@@ -10,7 +10,7 @@ public class AntiRollBar : MonoBehaviour {
 	void Start ()
 	{
 		//Im cheating for now
-		rigidbody.centerOfMass += new Vector3 (0f, -0.5f, 0f);
+		rigidbody.centerOfMass += new Vector3 (0f, -0.6f, 0f);
 	}
 	/*
 	void FixedUpdate ()
