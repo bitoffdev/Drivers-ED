@@ -75,6 +75,7 @@ public class CityBuilder : MonoBehaviour {
 			}
 		}
 		GenerateRoads ();
+		GenerateWaypoints ();
 	}
 
 	#region MAKE BUILDINGS
@@ -102,6 +103,34 @@ public class CityBuilder : MonoBehaviour {
 		return Instantiate(building, buildingpos, Quaternion.identity) as GameObject;
 	}
 	#endregion
+
+	void GenerateWaypoints() {
+		GameObject WaypointsParent = new GameObject ();
+		WaypointsParent.transform.parent = transform;
+		WaypointsParent.name = "Waypoints";
+		// ===== Generate Roads
+		for (int x=0;x<=BlocksX;x++){
+			for (int z=0;z<=BlocksZ;z++){
+				Vector3 StartPoint = new Vector3(-CitySizeX/2f + x*(BlockSizeX + RoadWidth), 0f, -CitySizeZ/2f + z*(BlockSizeZ + RoadWidth));
+				// Waypoint 1
+				GameObject pt1 = new GameObject();
+				pt1.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.25f);
+				pt1.transform.parent = WaypointsParent.transform;
+				// Waypoint 2
+				GameObject pt2 = new GameObject();
+				pt2.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.25f);
+				pt2.transform.parent = WaypointsParent.transform;
+				// Waypoint 3
+				GameObject pt3 = new GameObject();
+				pt3.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.75f);
+				pt3.transform.parent = WaypointsParent.transform;
+				// Waypoint 4
+				GameObject pt4 = new GameObject();
+				pt4.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.75f);
+				pt4.transform.parent = WaypointsParent.transform;
+			}
+		}
+	}
 
 	#region MAKE GROUND
 	void GenerateRoads(){
