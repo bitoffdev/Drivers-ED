@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &114502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 414502}
+  - 114: {fileID: 11414502}
+  m_Layer: 0
+  m_Name: City
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &414502
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11414502
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce08188e8e6784ceda58608d9564451a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GenerateOnload: 0
+  BlocksX: 3
+  BlocksZ: 2
+  BlockSizeX: 110
+  BlockSizeZ: 150
+  RoadWidth: 9
+  Buildings:
+  - {fileID: 100000, guid: e00fbee2990e740c6a6ef8bac9c6fc23, type: 2}
+  - {fileID: 100000, guid: 6b958747623e8498794e7b3eef77d47f, type: 2}
+  - {fileID: 100000, guid: f4e137d979ffc4c7791edbe0f977742e, type: 2}
+  - {fileID: 100000, guid: 0c82eb6b128834c5aa74fa40cba6266c, type: 2}
+  - {fileID: 100000, guid: 17188ec8043f742ea97b58d583d3eca6, type: 2}
+  - {fileID: 100000, guid: 8d54893a6d68040b68c6b7db9426cd01, type: 2}
+  - {fileID: 100000, guid: d9c3b499c742647598d9881000851e81, type: 2}
+  - {fileID: 100000, guid: 344004ed5b96147548f2a50ecf0df3a8, type: 2}
+  - {fileID: 100000, guid: 9e3572eade7754332b560658c6c07eb3, type: 2}
+  - {fileID: 100000, guid: 2177b0094eb934750844bb1eb54c5c86, type: 2}
+  - {fileID: 100000, guid: 2679ffd6264f84a0493e3a7fdd1bec97, type: 2}
+  - {fileID: 100000, guid: a448619fb390341fab38116a06cd240e, type: 2}
+  - {fileID: 100000, guid: a2c9161c6401146fca9b1fdda1a04e39, type: 2}
+  - {fileID: 100000, guid: 53638ef7cd7c04ae4a723c721ab5ebf5, type: 2}
+  - {fileID: 100000, guid: 20c596ab6fa9c448085ec1a99c752ace, type: 2}
+  - {fileID: 100000, guid: 762784fb94d0646bf8476650bd47a254, type: 2}
+  BlockMaterial: {fileID: 2100000, guid: 68388e331fdc74dd793402302127625f, type: 2}
+  RoadMaterial: {fileID: 2100000, guid: df64f9bfd656dbb438116aef7dfacbb2, type: 2}
+  IntersectionMaterial: {fileID: 2100000, guid: 9e88aa956c6d2874bb6f6a3cd7cc7bad,
+    type: 2}
+  IntersectionPrefab: {fileID: 0}
+  CpuCar: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 114502}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1
