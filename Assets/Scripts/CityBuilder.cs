@@ -60,7 +60,7 @@ public class CityBuilder : MonoBehaviour {
 				// SCATTER BUILDINGS WITHIN THE BLOCK
 				int tries = 0;
 				List<GameObject> newobjects = new List<GameObject> ();
-				while (tries<100){
+				while (tries<200){
 					GameObject newobj = PlaceBuilding(Buildings[Random.Range (0, Buildings.Length)], minPoint);
 					if (newobj!=null){
 						newobj.transform.SetParent(transform);
@@ -114,31 +114,16 @@ public class CityBuilder : MonoBehaviour {
 			for (int z=0;z<=BlocksZ;z++){
 				Vector3 StartPoint = new Vector3(-CitySizeX/2f + x*(BlockSizeX + RoadWidth), 0f, -CitySizeZ/2f + z*(BlockSizeZ + RoadWidth));
 				int counter = (x*(BlocksZ+1)+z)*4;
+				// Create the waypoints
 				pts[counter] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.25f), WaypointsParent.transform);
 				pts[counter+1] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.25f), WaypointsParent.transform);
 				pts[counter+2] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.75f), WaypointsParent.transform);
 				pts[counter+3] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.75f), WaypointsParent.transform);
-				/*
-				// Waypoint 1
-				GameObject pt1 = new GameObject();
-				pt1.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.25f);
-				pt1.transform.parent = WaypointsParent.transform;
-				pt1.AddComponent<Waypoint> ();
-				// Waypoint 2
-				GameObject pt2 = new GameObject();
-				pt2.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.25f);
-				pt2.transform.parent = WaypointsParent.transform;
-				pt2.AddComponent<Waypoint> ();
-				// Waypoint 3
-				GameObject pt3 = new GameObject();
-				pt3.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.75f);
-				pt3.transform.parent = WaypointsParent.transform;
-				pt3.AddComponent<Waypoint> ();
-				// Waypoint 4
-				GameObject pt4 = new GameObject();
-				pt4.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.75f);
-				pt4.transform.parent = WaypointsParent.transform;
-				pt4.AddComponent<Waypoint> ();*/
+				// Name the waypoints
+				pts[counter].gameObject.name = string.Format("X{0}Z{1}-BL", x, z);
+				pts[counter+1].gameObject.name = string.Format("X{0}Z{1}-BR", x, z);
+				pts[counter+2].gameObject.name = string.Format("X{0}Z{1}-TR", x, z);
+				pts[counter+3].gameObject.name = string.Format("X{0}Z{1}-TL", x, z);
 			}
 		}
 		// ===== Create Paths
