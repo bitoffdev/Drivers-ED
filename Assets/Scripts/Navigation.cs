@@ -42,7 +42,7 @@ public class Navigation : MonoBehaviour {
 	void Update () {
 		// Choose the next destination point when the agent gets
 		// close to the current one.
-		if (agent.remainingDistance < 0.5f)
+		if (agent.remainingDistance < 1.0f)
 			GotoNextPoint();
 	}
 }
