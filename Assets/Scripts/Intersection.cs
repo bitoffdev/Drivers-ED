@@ -64,8 +64,8 @@ public class Intersection : MonoBehaviour {
 				enteringnum = 4;
 			}
 			if ((currentCycle==0&&enteringnum%2==0) || (currentCycle==1&&enteringnum%2!=0)){
-				TrafficLaws laws = col.gameObject.GetComponentInParent<TrafficLaws>();
-				laws.SetStatus(TrafficLaws.Status.RedLightViolation);
+				DrivingEvaluator evaluator = col.gameObject.GetComponentInParent<DrivingEvaluator>();
+				evaluator.AddViolation(DrivingEvaluator.Violation.RedLight);
 			}
 		}
 	}

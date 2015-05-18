@@ -108,28 +108,76 @@ public class CityBuilder : MonoBehaviour {
 		GameObject WaypointsParent = new GameObject ();
 		WaypointsParent.transform.parent = transform;
 		WaypointsParent.name = "Waypoints";
-		// ===== Generate Roads
+		Waypoint[] pts = new Waypoint[(BlocksX+1)*(BlocksZ+1)*4];
+		// ===== Generate Waypoints
 		for (int x=0;x<=BlocksX;x++){
 			for (int z=0;z<=BlocksZ;z++){
 				Vector3 StartPoint = new Vector3(-CitySizeX/2f + x*(BlockSizeX + RoadWidth), 0f, -CitySizeZ/2f + z*(BlockSizeZ + RoadWidth));
+				int counter = (x*(BlocksZ+1)+z)*4;
+				pts[counter] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.25f), WaypointsParent.transform);
+				pts[counter+1] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.25f), WaypointsParent.transform);
+				pts[counter+2] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.75f), WaypointsParent.transform);
+				pts[counter+3] = MakeWaypoint(StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.75f), WaypointsParent.transform);
+				/*
 				// Waypoint 1
 				GameObject pt1 = new GameObject();
 				pt1.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.25f);
 				pt1.transform.parent = WaypointsParent.transform;
+				pt1.AddComponent<Waypoint> ();
 				// Waypoint 2
 				GameObject pt2 = new GameObject();
 				pt2.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.25f);
 				pt2.transform.parent = WaypointsParent.transform;
+				pt2.AddComponent<Waypoint> ();
 				// Waypoint 3
 				GameObject pt3 = new GameObject();
 				pt3.transform.position = StartPoint + new Vector3(RoadWidth*0.75f, 0f, RoadWidth*0.75f);
 				pt3.transform.parent = WaypointsParent.transform;
+				pt3.AddComponent<Waypoint> ();
 				// Waypoint 4
 				GameObject pt4 = new GameObject();
 				pt4.transform.position = StartPoint + new Vector3(RoadWidth*0.25f, 0f, RoadWidth*0.75f);
 				pt4.transform.parent = WaypointsParent.transform;
+				pt4.AddComponent<Waypoint> ();*/
 			}
 		}
+		// ===== Create Paths
+		for (int x=0;x<=BlocksX;x++){
+			for (int z=0;z<=BlocksZ;z++){
+				int counter = (x*(BlocksZ+1)+z)*4;
+				List<Waypoint> next1 = new List<Waypoint>();
+				List<Waypoint> next2 = new List<Waypoint>();
+				List<Waypoint> next3 = new List<Waypoint>();
+				List<Waypoint> next4 = new List<Waypoint>();
+				if (z>0){
+					next1.Add (pts[counter-1]);
+					next3.Add (pts[counter-1]);
+					next4.Add (pts[counter-1]);
+				}
+				if (z<BlocksZ){
+					next1.Add (pts[counter+5]);
+					next2.Add (pts[counter+5]);
+					next3.Add (pts[counter+5]);
+				}
+				/*
+				if (x<BlocksX){
+					next1.Add (pts[counter+x*(BlocksZ+1)*4+1]);
+					next2.Add (pts[counter+x*(BlocksZ+1)*4+1]);
+					next4.Add (pts[counter+x*(BlocksZ+1)*4+1]);
+				}*/
+				pts[counter].nextpoints = next1.ToArray();
+				pts[counter+1].nextpoints = next2.ToArray();
+				pts[counter+2].nextpoints = next3.ToArray ();
+				pts[counter+3].nextpoints = next4.ToArray ();
+			}
+		}
+	}
+
+	Waypoint MakeWaypoint(Vector3 pos, Transform parent){
+		GameObject pt = new GameObject();
+		pt.transform.position = pos;
+		pt.transform.parent = parent;
+		return pt.AddComponent<Waypoint> ();
 	}
 
 	#region MAKE GROUND
