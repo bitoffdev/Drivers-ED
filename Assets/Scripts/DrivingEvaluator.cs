@@ -5,14 +5,26 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CarController))]
 public class DrivingEvaluator : MonoBehaviour
 {
-	// Violation variables
+	// UI text to display notifications for the player
+	public Text uitext;
+	// Instructions - directs the player where to go
+	[System.Serializable]
+	public class Instruction {
+		public Transform waypoint;
+		public string text;
+		public Instruction(Transform _waypoint, string _text){
+			waypoint = _waypoint;
+			text = _text;
+		}
+	}
+	public Instruction[] instructions;
+	int currentInstruction = 0;
+	// Violation variables - checks if the player obeys the traffic laws
 	public enum Violation {Speeding, RedLight, Aggressive, Accident, DroveOffRoad, Lane}
 	List<Violation> violations = new List<Violation>();
 	// Status variables
 	int onroad = 0;
 	float SpeedLimit = 50f;
-	// UI Text used to display violations
-	public Text uitext;
 
 	// MAIN METHODS
 	public void AddViolation(Violation v){
@@ -39,10 +51,37 @@ public class DrivingEvaluator : MonoBehaviour
 		}
 	}
 
+	void Start () {
+		uitext.text = instructions [currentInstruction].text;
+	}
+
 	// CHECK IF THE CAR IS SPEEDING
 	void Update () {
 		if (rigidbody.velocity.magnitude * 2.2369f > SpeedLimit) {
 			AddViolation(Violation.Speeding);
+		}
+		if (Vector3.Distance (transform.position, instructions [currentInstruction].waypoint.position) < 4f) {
+			if (instructions.Length > currentInstruction+1){
+				currentInstruction+=1;
+				uitext.text = instructions[currentInstruction].text;
+			} else {
+				uitext.text = "Drive complete";
+				gameObject.GetComponent<CarController> ().enabled = false;
+			}
+		}
+	}
+
+	// CHECK IF THE PLAYER HAS REACHED THE NEXT WAYPOINT
+	void OnTriggerEnter (Collider col){
+		if (col.transform == instructions[currentInstruction].waypoint){
+			if (instructions.Length > currentInstruction+1){
+				currentInstruction+=1;
+				uitext.text = instructions[currentInstruction].text;
+				/*currentWaypoint = waypoints[currentIndex];
+				pointerTarget = new Vector3(currentWaypoint.position.x, 
+				                            arrow.position.y, 
+				                            currentWaypoint.position.z);*/
+			}
 		}
 	}
 

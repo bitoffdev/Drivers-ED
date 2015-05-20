@@ -46,6 +46,9 @@ public class CityBuilder : MonoBehaviour {
 		CitySizeX = BlocksX * (BlockSizeX + RoadWidth) + RoadWidth;
 		CitySizeZ = BlocksZ * (BlockSizeZ + RoadWidth) + RoadWidth;
 		// ===== Generate Blocks
+		GameObject BuildingsParent = new GameObject ();
+		BuildingsParent.transform.parent = transform;
+		BuildingsParent.name = "Buildings";
 		for (int x=0;x<BlocksX;x++){
 			for (int z=0;z<BlocksZ;z++){
 				// Calculate minimum point of the block
@@ -63,7 +66,7 @@ public class CityBuilder : MonoBehaviour {
 				while (tries<200){
 					GameObject newobj = PlaceBuilding(Buildings[Random.Range (0, Buildings.Length)], minPoint);
 					if (newobj!=null){
-						newobj.transform.SetParent(transform);
+						newobj.transform.SetParent(BuildingsParent.transform);
 						if ( newobjects.FindIndex(p=>p.renderer.bounds.Intersects(newobj.renderer.bounds)) == -1){
 							newobjects.Add(newobj);
 						} else {

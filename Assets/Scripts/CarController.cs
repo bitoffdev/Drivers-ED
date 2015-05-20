@@ -11,10 +11,10 @@ public class CarController : MonoBehaviour {
 	float[] gearRatios = {0f, 4.23f, 2.47f, 1.67f, 1.23f, 1.00f, 0.79f};
 	float MinRPM = 200f;
 	float DownshiftRPM = 600f;
-	float PeakRPM = 900f;
-	float MaxRPM = 1200f;
+	float PeakRPM = 2000f;
+	float MaxRPM = 5000f;
 	float minTorque = 10f;
-	float maxTorque = 30f;
+	float maxTorque = 35f;
 	//Data
 	public int CurrentGear = 0;
 	float CurrentEngineRPM = 0f;
@@ -43,7 +43,7 @@ public class CarController : MonoBehaviour {
 		ShiftGears ();
 		UpdateCar();
 
-		audio.pitch = Mathf.Min (Mathf.Abs(CurrentEngineRPM / MaxRPM), 2f);
+		//audio.pitch = Mathf.Min (Mathf.Abs(CurrentEngineRPM / MaxRPM), 2f);
 	}
 
 	void UpdateCar (){
@@ -65,7 +65,15 @@ public class CarController : MonoBehaviour {
 		}
 		wheelRPM /= FrontWheels.Length;
 
-		CurrentBrakeTorque = Mathf.Max (-AccelerationInput, 0f) * 25f;
+		// Brake
+		/*
+		if (AccelerationInput<0){
+			CurrentBrakeTorque = Mathf.Lerp (CurrentBrakeTorque, 100f, Time.deltaTime);
+		} else {
+			CurrentBrakeTorque = 0f;
+		}*/
+
+		CurrentBrakeTorque = Mathf.Max (-AccelerationInput, 0f) * 80f;
 		if (CurrentGear > 0) {
 			// Engine Shaft RPM
 			float EngineShaftRPM = wheelRPM * gearRatios[CurrentGear];

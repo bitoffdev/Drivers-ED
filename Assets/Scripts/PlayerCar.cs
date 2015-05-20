@@ -7,6 +7,7 @@ public class PlayerCar : MonoBehaviour {
 	CarController controller;
 	float SteerAngle;
 	TrafficLaws laws;
+	float CurrentAcceleration = 0f;
 
 	void Start () {
 		controller = gameObject.GetComponent<CarController> ();
@@ -14,7 +15,8 @@ public class PlayerCar : MonoBehaviour {
 	}
 	
 	void Update () {
-		controller.SetAcceleration (Input.GetAxis("Vertical"));
+		CurrentAcceleration = Mathf.Lerp (CurrentAcceleration, Input.GetAxis ("Vertical"), Time.deltaTime*4);
+		controller.SetAcceleration (CurrentAcceleration);
 		controller.SetSteering (Input.GetAxis("Horizontal"));
 	}
 
