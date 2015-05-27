@@ -57,10 +57,21 @@ public class DrivingEvaluator : MonoBehaviour
 
 	// CHECK IF THE CAR IS SPEEDING
 	void Update () {
-		if (rigidbody.velocity.magnitude * 2.2369f > SpeedLimit) {
-			AddViolation(Violation.Speeding);
+		Vector3 heading = instructions [currentInstruction].waypoint.position - transform.position;
+		float turnAngle = Vector3.Cross(transform.forward, heading).y;
+		if (turnAngle > 55f){
+			uitext.text = "Turn right.";
+		} else if (turnAngle < -55f) {
+			uitext.text = "Turn left.";
+		} else {
+			uitext.text = string.Format("Continue for {0:F0} m.", heading.magnitude);
 		}
-		if (Vector3.Distance (transform.position, instructions [currentInstruction].waypoint.position) < 4f) {
+
+		if (rigidbody.velocity.magnitude * 2.2369f > SpeedLimit) {
+			uitext.text = "You're speeding! " + uitext.text;
+			//AddViolation(Violation.Speeding);
+		}
+		if (Vector3.Distance (transform.position, instructions [currentInstruction].waypoint.position) < 10f) {
 			if (instructions.Length > currentInstruction+1){
 				currentInstruction+=1;
 				uitext.text = instructions[currentInstruction].text;
@@ -77,10 +88,6 @@ public class DrivingEvaluator : MonoBehaviour
 			if (instructions.Length > currentInstruction+1){
 				currentInstruction+=1;
 				uitext.text = instructions[currentInstruction].text;
-				/*currentWaypoint = waypoints[currentIndex];
-				pointerTarget = new Vector3(currentWaypoint.position.x, 
-				                            arrow.position.y, 
-				                            currentWaypoint.position.z);*/
 			}
 		}
 	}
