@@ -17,7 +17,7 @@ public class PlayerCar : MonoBehaviour {
 		controller.SetSteering (Input.GetAxis("Horizontal"));
 	}
 
-	/*void OnGUI(){
+	void OnGUI(){
 		GUI.Label (new Rect(10f, Screen.height-40f, Screen.width, 20f), string.Format("RPM: {0:0.00}, Speed: {1:0.00} MPH, Violation: {2}", controller.GetRPM(), rigidbody.velocity.magnitude*2.2369f, ""));
-	}*/
+	}
 }
