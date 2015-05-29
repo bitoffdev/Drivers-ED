@@ -8,15 +8,16 @@ public class CarController : MonoBehaviour {
 	float BrakeInput;
 	float SteerInput;
 	//Settings
-	float[] gearRatios = {0f, 4.23f, 2.47f, 1.67f, 1.23f, 1.00f, 0.79f};
+	float[] gearRatios = {-4.23f, 0f, 4.23f, 2.47f, 1.67f, 1.23f, 1.00f, 0.79f};
 	float MinRPM = 200f;
 	float DownshiftRPM = 600f;
 	float PeakRPM = 2000f;
 	float MaxRPM = 5000f;
 	float minTorque = 10f;
-	float maxTorque = 35f;
+	float maxTorque = 40f;
 	//Data
-	public int CurrentGear = 0;
+	public int NeutralGear = 1;
+	public int CurrentGear = 1;
 	float CurrentEngineRPM = 0f;
 	float CurrentWheelTorque;
 	float CurrentBrakeTorque;
@@ -65,16 +66,8 @@ public class CarController : MonoBehaviour {
 		}
 		wheelRPM /= FrontWheels.Length;
 
-		// Brake
-		/*
-		if (AccelerationInput<0){
-			CurrentBrakeTorque = Mathf.Lerp (CurrentBrakeTorque, 100f, Time.deltaTime);
-		} else {
-			CurrentBrakeTorque = 0f;
-		}*/
-
 		CurrentBrakeTorque = Mathf.Max (-AccelerationInput, 0f) * 80f;
-		if (CurrentGear > 0) {
+		if (CurrentGear != NeutralGear) {
 			// Engine Shaft RPM
 			float EngineShaftRPM = wheelRPM * gearRatios[CurrentGear];
 			// Lerp the Engine RPM toward its shaft RPM
@@ -89,11 +82,15 @@ public class CarController : MonoBehaviour {
 	}
 
 	void ShiftGears(){
-		if (CurrentGear == 0 && CurrentEngineRPM > 400f) {
-			CurrentGear++;
+		if (CurrentGear == NeutralGear && CurrentEngineRPM > 400f) {
+			if (AccelerationInput<0f){
+				CurrentGear--;
+			} else {
+				CurrentGear++;
+			}
 		} else if (CurrentGear < gearRatios.Length - 1 && CurrentEngineRPM > PeakRPM && AccelerationInput > 0.2f){
 			CurrentGear++;
-		} else if (CurrentGear > 0 && CurrentEngineRPM < DownshiftRPM){
+		} else if (CurrentGear > NeutralGear && CurrentEngineRPM < DownshiftRPM){
 			CurrentGear--;
 		}
 	}

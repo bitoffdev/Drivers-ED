@@ -4,17 +4,20 @@ using System.Collections;
 [RequireComponent(typeof(CarController))]
 public class PlayerCar : MonoBehaviour {
 	CarController controller;
-	float SteerAngle;
 	float CurrentAcceleration = 0f;
+	float CurrentSteering = 0f;
 
 	void Start () {
 		controller = gameObject.GetComponent<CarController> ();
 	}
 	
 	void Update () {
+		//Acceleration
 		CurrentAcceleration = Mathf.Lerp (CurrentAcceleration, Input.GetAxis ("Vertical"), Time.deltaTime*4);
 		controller.SetAcceleration (CurrentAcceleration);
-		controller.SetSteering (Input.GetAxis("Horizontal"));
+		//Steering
+		CurrentSteering = Mathf.Lerp (CurrentSteering, Input.GetAxis ("Horizontal"), Time.deltaTime*4);
+		controller.SetSteering (CurrentSteering);
 	}
 
 	void OnGUI(){
