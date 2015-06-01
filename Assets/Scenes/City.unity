@@ -318,7 +318,7 @@ GameObject:
   - 33: {fileID: 13738935}
   - 23: {fileID: 13738934}
   - 65: {fileID: 13738933}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3052,7 +3052,7 @@ GameObject:
   - 33: {fileID: 118269549}
   - 23: {fileID: 118269548}
   - 65: {fileID: 118269547}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3580,7 +3580,7 @@ GameObject:
   - 33: {fileID: 153104212}
   - 23: {fileID: 153104211}
   - 65: {fileID: 153104210}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3721,7 +3721,7 @@ GameObject:
   - 33: {fileID: 165020605}
   - 23: {fileID: 165020604}
   - 65: {fileID: 165020603}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3935,6 +3935,9 @@ MonoBehaviour:
   FrontWheels:
   - {fileID: 1678221061}
   - {fileID: 1061307564}
+  BitingRPM: 800
+  PeakRPM: 4000
+  MaxRPM: 6000
   NeutralGear: 1
   CurrentGear: 1
 --- !u!114 &165367349
@@ -4035,8 +4038,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.4065666, y: 12.6596785, z: 18.8987961}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.63802719, y: 2.34148979, z: 5.76618958}
+  m_Center: {x: 2.38426971, y: -5.15909386, z: 6.56630325}
 --- !u!1 &168559324
 GameObject:
   m_ObjectHideFlags: 0
@@ -4923,7 +4926,7 @@ GameObject:
   - 33: {fileID: 222827180}
   - 23: {fileID: 222827179}
   - 65: {fileID: 222827178}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5859,7 +5862,7 @@ GameObject:
   - 33: {fileID: 323134370}
   - 23: {fileID: 323134369}
   - 65: {fileID: 323134368}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6066,7 +6069,7 @@ GameObject:
   - 33: {fileID: 334055547}
   - 23: {fileID: 334055546}
   - 65: {fileID: 334055545}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6355,7 +6358,7 @@ GameObject:
   - 33: {fileID: 347794762}
   - 23: {fileID: 347794761}
   - 65: {fileID: 347794760}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6424,7 +6427,7 @@ GameObject:
   - 33: {fileID: 353743949}
   - 23: {fileID: 353743948}
   - 65: {fileID: 353743947}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7309,7 +7312,7 @@ GameObject:
   - 33: {fileID: 406448681}
   - 23: {fileID: 406448680}
   - 65: {fileID: 406448679}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7715,7 +7718,7 @@ GameObject:
   - 33: {fileID: 441943654}
   - 23: {fileID: 441943653}
   - 65: {fileID: 441943652}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8113,6 +8116,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -10715,7 +10719,7 @@ GameObject:
   - 33: {fileID: 638831058}
   - 23: {fileID: 638831057}
   - 65: {fileID: 638831056}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11208,7 +11212,7 @@ GameObject:
   - 33: {fileID: 655494377}
   - 23: {fileID: 655494376}
   - 65: {fileID: 655494375}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12482,6 +12486,14 @@ Prefab:
       propertyPath: CurrentGear
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 901d75ca592c84939aec811d96b6781a, type: 2}
+      propertyPath: PeakRPM
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 901d75ca592c84939aec811d96b6781a, type: 2}
+      propertyPath: MaxRPM
+      value: 6000
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400004, guid: 901d75ca592c84939aec811d96b6781a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 901d75ca592c84939aec811d96b6781a, type: 2}
@@ -12568,7 +12580,7 @@ GameObject:
   - 33: {fileID: 700070400}
   - 23: {fileID: 700070399}
   - 65: {fileID: 700070398}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12848,6 +12860,7 @@ GameObject:
   - 4: {fileID: 703779183}
   - 33: {fileID: 703779185}
   - 23: {fileID: 703779184}
+  - 114: {fileID: 703779186}
   m_Layer: 0
   m_Name: Cadillac_CTS_PART3
   m_TagString: Player
@@ -12900,6 +12913,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 696332324}
   m_GameObject: {fileID: 703779182}
   m_Mesh: {fileID: 4300000, guid: a2645ef8c9dc6455bb8daafb75b28106, type: 2}
+--- !u!114 &703779186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 703779182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec66d600a7f1b43dea3126efee791c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minForce: 1
+  multiplier: .100000001
+  deformRadius: 1
+  maxDeform: 0
+  bounceBackSpeed: 0
+  bounceBackSleepCap: .00100000005
+  onCollision: 1
+  onCall: 1
+  updateCollider: 0
+  updateColliderOnBounce: 0
 --- !u!1 &705866999
 GameObject:
   m_ObjectHideFlags: 0
@@ -14352,7 +14386,7 @@ GameObject:
   - 33: {fileID: 846375269}
   - 23: {fileID: 846375268}
   - 65: {fileID: 846375267}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16391,7 +16425,7 @@ GameObject:
   - 33: {fileID: 1000668516}
   - 23: {fileID: 1000668515}
   - 65: {fileID: 1000668514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16501,7 +16535,7 @@ GameObject:
   - 33: {fileID: 1006859259}
   - 23: {fileID: 1006859258}
   - 65: {fileID: 1006859257}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16570,7 +16604,7 @@ GameObject:
   - 33: {fileID: 1007861325}
   - 23: {fileID: 1007861324}
   - 65: {fileID: 1007861323}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18642,7 +18676,7 @@ GameObject:
   - 33: {fileID: 1129831240}
   - 23: {fileID: 1129831239}
   - 65: {fileID: 1129831238}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19388,7 +19422,7 @@ GameObject:
   - 33: {fileID: 1152682806}
   - 23: {fileID: 1152682805}
   - 65: {fileID: 1152682804}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20631,7 +20665,7 @@ GameObject:
   - 33: {fileID: 1253207700}
   - 23: {fileID: 1253207699}
   - 65: {fileID: 1253207698}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20970,7 +21004,7 @@ GameObject:
   - 33: {fileID: 1258457473}
   - 23: {fileID: 1258457472}
   - 65: {fileID: 1258457471}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21039,7 +21073,7 @@ GameObject:
   - 33: {fileID: 1258683577}
   - 23: {fileID: 1258683576}
   - 65: {fileID: 1258683575}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23374,7 +23408,7 @@ GameObject:
   - 33: {fileID: 1361570209}
   - 23: {fileID: 1361570208}
   - 65: {fileID: 1361570207}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23946,7 +23980,7 @@ GameObject:
   - 33: {fileID: 1417320834}
   - 23: {fileID: 1417320833}
   - 65: {fileID: 1417320832}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26404,7 +26438,7 @@ GameObject:
   - 33: {fileID: 1523813231}
   - 23: {fileID: 1523813230}
   - 65: {fileID: 1523813229}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27008,7 +27042,7 @@ GameObject:
   - 33: {fileID: 1566894711}
   - 23: {fileID: 1566894710}
   - 65: {fileID: 1566894709}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27376,7 +27410,7 @@ GameObject:
   - 33: {fileID: 1576743049}
   - 23: {fileID: 1576743048}
   - 65: {fileID: 1576743047}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27515,7 +27549,7 @@ GameObject:
   - 33: {fileID: 1584528831}
   - 23: {fileID: 1584528830}
   - 65: {fileID: 1584528829}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29443,7 +29477,7 @@ GameObject:
   - 33: {fileID: 1684025316}
   - 23: {fileID: 1684025315}
   - 65: {fileID: 1684025314}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31230,7 +31264,7 @@ GameObject:
   - 33: {fileID: 1801501276}
   - 23: {fileID: 1801501275}
   - 65: {fileID: 1801501274}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34060,7 +34094,7 @@ GameObject:
   - 33: {fileID: 1959806981}
   - 23: {fileID: 1959806980}
   - 65: {fileID: 1959806979}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34932,7 +34966,7 @@ GameObject:
   - 33: {fileID: 2001669509}
   - 23: {fileID: 2001669508}
   - 65: {fileID: 2001669507}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35516,7 +35550,7 @@ GameObject:
   - 33: {fileID: 2048370365}
   - 23: {fileID: 2048370364}
   - 65: {fileID: 2048370363}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36151,7 +36185,7 @@ GameObject:
   - 33: {fileID: 2086729577}
   - 23: {fileID: 2086729576}
   - 65: {fileID: 2086729575}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36394,7 +36428,7 @@ GameObject:
   - 33: {fileID: 2113042420}
   - 23: {fileID: 2113042419}
   - 65: {fileID: 2113042418}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36797,7 +36831,7 @@ GameObject:
   - 33: {fileID: 2129692650}
   - 23: {fileID: 2129692649}
   - 65: {fileID: 2129692648}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Game Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}

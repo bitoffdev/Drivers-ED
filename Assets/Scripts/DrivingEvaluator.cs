@@ -28,12 +28,14 @@ public class DrivingEvaluator : MonoBehaviour
 
 	// MAIN METHODS
 	public void AddViolation(Violation v){
-		violations.Add(v);
-		DisplayLastViolation ();
+		if (violations.Count==0 || violations[violations.Count-1]!=v){
+			violations.Add(v);
+		}
+		//DisplayLastViolation ();
 	}
 
 	public void DisplayLastViolation (){
-		if (violations.Count == 0){return;}
+		if (violations.Count == 0){uitext.text = "";return;}
 
 		switch (violations [violations.Count - 1]) {
 		case Violation.Accident:
@@ -57,19 +59,20 @@ public class DrivingEvaluator : MonoBehaviour
 
 	// CHECK IF THE CAR IS SPEEDING
 	void Update () {
+		DisplayLastViolation ();
 		Vector3 heading = instructions [currentInstruction].waypoint.position - transform.position;
 		float turnAngle = Vector3.Cross(transform.forward, heading).y;
 		if (turnAngle > 55f){
-			uitext.text = "Turn right.";
+			uitext.text += " Turn right.";
 		} else if (turnAngle < -55f) {
-			uitext.text = "Turn left.";
+			uitext.text += " Turn left.";
 		} else {
-			uitext.text = string.Format("Continue for {0:F0} m.", heading.magnitude);
+			uitext.text += string.Format(" Continue for {0:F0} m.", heading.magnitude);
 		}
 
 		if (rigidbody.velocity.magnitude * 2.2369f > SpeedLimit) {
-			uitext.text = "You're speeding! " + uitext.text;
-			//AddViolation(Violation.Speeding);
+			//uitext.text = "You're speeding! " + uitext.text;
+			AddViolation(Violation.Speeding);
 		}
 		if (Vector3.Distance (transform.position, instructions [currentInstruction].waypoint.position) < 10f) {
 			if (instructions.Length > currentInstruction+1){
@@ -101,6 +104,7 @@ public class DrivingEvaluator : MonoBehaviour
 	void OnCollisionExit (Collision col) {
 		if (col.gameObject.layer==LayerMask.NameToLayer("Roads")){
 			onroad -= 1;
+			Debug.Log (onroad);
 			if (onroad==0){
 				AddViolation(Violation.DroveOffRoad);
 			}
