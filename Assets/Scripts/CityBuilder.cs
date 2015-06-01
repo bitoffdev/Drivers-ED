@@ -147,12 +147,16 @@ public class CityBuilder : MonoBehaviour {
 					next2.Add (pts[counter+5]);
 					next3.Add (pts[counter+5]);
 				}
-				/*
+				if (x>0){
+					next2.Add (pts[counter-4*(BlocksZ+1)+2]);
+					next3.Add (pts[counter-4*(BlocksZ+1)+2]);
+					next4.Add (pts[counter-4*(BlocksZ+1)+2]);
+				}
 				if (x<BlocksX){
-					next1.Add (pts[counter+x*(BlocksZ+1)*4+1]);
-					next2.Add (pts[counter+x*(BlocksZ+1)*4+1]);
-					next4.Add (pts[counter+x*(BlocksZ+1)*4+1]);
-				}*/
+					next1.Add (pts[counter+4*(BlocksZ+1)]);
+					next2.Add (pts[counter+4*(BlocksZ+1)]);
+					next4.Add (pts[counter+4*(BlocksZ+1)]);
+				}
 				pts[counter].nextpoints = next1.ToArray();
 				pts[counter+1].nextpoints = next2.ToArray();
 				pts[counter+2].nextpoints = next3.ToArray ();
