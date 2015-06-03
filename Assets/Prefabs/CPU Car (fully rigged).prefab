@@ -159,10 +159,9 @@ GameObject:
   - 4: {fileID: 400020}
   - 33: {fileID: 3300006}
   - 23: {fileID: 2300006}
-  - 54: {fileID: 5400000}
   - 82: {fileID: 8200000}
   - 195: {fileID: 19500000}
-  - 114: {fileID: 11400006}
+  - 114: {fileID: 11421882}
   m_Layer: 0
   m_Name: CPU Car (fully rigged)
   m_TagString: Player
@@ -493,21 +492,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100022}
   m_Mesh: {fileID: 4300002, guid: 91862ba27a1a6443fb93a25e2b42583c, type: 3}
---- !u!54 &5400000
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100020}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: .100000001
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &6500000
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -617,22 +601,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentNavAgent: {fileID: 19500000}
   CorrespondingCollider: {fileID: 14600004}
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b370e417920fd4bfb9f4703e74606f85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -646,6 +614,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentNavAgent: {fileID: 19500000}
   CorrespondingCollider: {fileID: 14600000}
+--- !u!114 &11421882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21526ab239c74410596aac2cb0416b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetWaypoint: {fileID: 0}
 --- !u!146 &14600000
 WheelCollider:
   m_ObjectHideFlags: 1

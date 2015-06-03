@@ -20,7 +20,7 @@ public class CityBuilder : MonoBehaviour {
 	public Material BlockMaterial;
 	public Material RoadMaterial;
 	public Material IntersectionMaterial;
-	public GameObject IntersectionPrefab;
+	//public GameObject IntersectionPrefab;
 	public GameObject CpuCar;
 
 	float CitySizeX, CitySizeZ;
@@ -163,6 +163,15 @@ public class CityBuilder : MonoBehaviour {
 				pts[counter+3].nextpoints = next4.ToArray ();
 			}
 		}
+		// ===== Create Cpu Cars
+		GameObject CarsParent = new GameObject ();
+		CarsParent.transform.parent = transform;
+		CarsParent.name = "CpuCars";
+		foreach (Waypoint pt in pts){
+			GameObject obj = Instantiate(CpuCar, pt.transform.position, Quaternion.identity) as GameObject;
+			obj.transform.parent = CarsParent.transform;
+			obj.GetComponent<CpuCar>().targetWaypoint = pt;
+		}
 	}
 
 	Waypoint MakeWaypoint(Vector3 pos, Transform parent){
@@ -290,36 +299,5 @@ public class CityBuilder : MonoBehaviour {
 		m.RecalculateNormals ();
 		return m;
 	}
-	#endregion
-
-	#region MAKE VEHICLES
-	/*
-	void GenerateWaypoints(){
-		// Create the intersections
-		List<GameObject> waypoints;
-		for (int x=0;x<=BlocksX;x++){
-			for (int z=0;z<=BlocksZ;z++){
-				Vector3 StartPoint = new Vector3(-CitySizeX/2f + x*(BlockSizeX + RoadWidth), 0f, -CitySizeZ/2f + z*(BlockSizeZ + RoadWidth));
-				waypoints.Add(Instantiate(IntersectionPrefab, StartPoint + new Vector3(RoadWidth/2f, 0f, RoadWidth/2f), Quaternion.identity));
-			}
-		}
-		// Add some CPU cars
-		if (BlocksX>1&&BlockSizeZ>1){
-		int start = 0;//Random.Range (0, waypoints.Count);
-			List<int> indices = new List<int>();
-		int current = -1;
-		int dirX = 1;
-		int dirZ = 0;
-
-		while (current!=start){
-
-		}
-		Instantiate (CpuCar, waypoints[start].position, Quaternion.identity);
-		Navigation n = CpuCar.GetComponent<Navigation> ();
-		n.points = new Transform[4];
-		if ()
-		}
-	}
-	*/
 	#endregion
 }

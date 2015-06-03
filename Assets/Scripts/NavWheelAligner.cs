@@ -8,26 +8,35 @@
 /// </summary>
 public class NavWheelAligner : MonoBehaviour {
 	public NavMeshAgent ParentNavAgent;
-	public WheelCollider CorrespondingCollider;
+	//public WheelCollider CorrespondingCollider;
+	public float wheelRadius;
+	public float suspensionDistance;
+	Vector3 DefaultPosition;
 
 	float circumference = 0.5f;
 	
 	void Start () {
-		circumference = 2f * CorrespondingCollider.radius * Mathf.PI;
+		DefaultPosition = transform.localPosition;
+		circumference = 2f * wheelRadius * Mathf.PI;
 	}
 	
 	void Update () {
 		// ===== Update Suspension =====
 		RaycastHit hit;
-		Vector3 ColliderCenterPoint = CorrespondingCollider.transform.TransformPoint(CorrespondingCollider.center);
-		if (Physics.Raycast(ColliderCenterPoint, -CorrespondingCollider.transform.up, out hit, CorrespondingCollider.suspensionDistance + CorrespondingCollider.radius)) {
-			transform.position = hit.point + (CorrespondingCollider.transform.up * CorrespondingCollider.radius);
+		Vector3 ColliderCenterPoint = transform.parent.TransformPoint(DefaultPosition);//CorrespondingCollider.transform.TransformPoint(CorrespondingCollider.center);
+		if (Physics.Raycast(ColliderCenterPoint, -ParentNavAgent.transform.up, out hit, suspensionDistance + wheelRadius)) {
+			transform.position = hit.point + (-ParentNavAgent.transform.up * wheelRadius);
 		} else {
-			transform.position = ColliderCenterPoint - (CorrespondingCollider.transform.up * CorrespondingCollider.suspensionDistance);
+			transform.position = ColliderCenterPoint - (ParentNavAgent.transform.up * suspensionDistance);
 		}
 		
 		// =====Update Rotation =====
 		float rps = ParentNavAgent.velocity.magnitude / circumference;
 		transform.Rotate(Time.deltaTime * 360f * rps, 0f, 0f);
+	}
+
+	void OnDrawGizmosSelected(){
+		UnityEditor.Handles.color = Color.green;
+		UnityEditor.Handles.DrawWireDisc(transform.position, transform.right, wheelRadius);
 	}
 }
