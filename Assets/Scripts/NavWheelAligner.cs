@@ -35,8 +35,10 @@ public class NavWheelAligner : MonoBehaviour {
 		transform.Rotate(Time.deltaTime * 360f * rps, 0f, 0f);
 	}
 
+#if UNITY_EDITOR
 	void OnDrawGizmosSelected(){
 		UnityEditor.Handles.color = Color.green;
 		UnityEditor.Handles.DrawWireDisc(transform.position, transform.right, wheelRadius);
 	}
+#endif
 }

@@ -5,7 +5,7 @@ public class Waypoint : MonoBehaviour {
 
 	public Waypoint[] nextpoints;
 
-
+	/*
 	void OnDrawGizmosSelected(){
 		if (nextpoints!=null){
 			Gizmos.color = Color.green;
@@ -13,5 +13,5 @@ public class Waypoint : MonoBehaviour {
 				Gizmos.DrawLine (transform.position, pt.transform.position);
 			}
 		}
-	}
+	}*/
 }
