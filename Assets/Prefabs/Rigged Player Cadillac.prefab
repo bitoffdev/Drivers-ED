@@ -105,7 +105,6 @@ GameObject:
   - 4: {fileID: 400010}
   - 33: {fileID: 3300004}
   - 23: {fileID: 2300004}
-  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: Cadillac_CTS_PART3
   m_TagString: Player
@@ -1157,6 +1156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e93113488f2e4a4c8841ba944a59128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedometer: {fileID: 0}
+  geartext: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1187,31 +1188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64016a0b853444c2bd8b542897e4c06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uitext: {fileID: 0}
-  instructions:
-  - waypoint: {fileID: 0}
-    text: Keep going straight
---- !u!114 &11400008
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec66d600a7f1b43dea3126efee791c64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minForce: 1
-  multiplier: .100000001
-  deformRadius: 1
-  maxDeform: 0
-  bounceBackSpeed: 0
-  bounceBackSleepCap: .00100000005
-  onCollision: 1
-  onCall: 1
-  updateCollider: 0
-  updateColliderOnBounce: 0
+  instructiontext: {fileID: 0}
+  TargetWaypoint: {fileID: 0}
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

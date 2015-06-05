@@ -21,7 +21,7 @@ public class CityBuilder : MonoBehaviour {
 	public Material RoadMaterial;
 	public Material IntersectionMaterial;
 	//public GameObject IntersectionPrefab;
-	public GameObject CpuCar;
+	public GameObject[] CpuCars;
 
 	float CitySizeX, CitySizeZ;
 	
@@ -168,7 +168,7 @@ public class CityBuilder : MonoBehaviour {
 		CarsParent.transform.parent = transform;
 		CarsParent.name = "CpuCars";
 		foreach (Waypoint pt in pts){
-			GameObject obj = Instantiate(CpuCar, pt.transform.position, Quaternion.identity) as GameObject;
+			GameObject obj = Instantiate(CpuCars[Random.Range (0, CpuCars.Length)], pt.transform.position, Quaternion.identity) as GameObject;
 			obj.transform.parent = CarsParent.transform;
 			obj.GetComponent<CpuCar>().targetWaypoint = pt;
 		}
